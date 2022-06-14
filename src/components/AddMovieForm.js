@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { customAlphabet } from "nanoid";
 import { addMovie } from './../actions/movieActions';
 import { connect } from 'react-redux';
 
 import { Link, useHistory } from 'react-router-dom';
+
+const nanoid = customAlphabet("1234567890", 3);
 
 const AddMovieForm = (props) => {
     const { push } = useHistory();
@@ -23,6 +26,13 @@ const AddMovieForm = (props) => {
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+        const newMovie = {
+            ...movie,
+            id: +nanoid()
+        }
+        props.addMovie(newMovie);
+        push("/movies");
     }
 
     const { title, director, genre, metascore, description } = movie;
@@ -58,7 +68,7 @@ const AddMovieForm = (props) => {
                         			
                     </div>
                     <div className="modal-footer">
-                        <input type="submit" className="btn btn-success" value="Add"/>
+                        <input type="submit" className="btn btn-success" value="Add" onClick={handleSubmit}/>
                         <Link to={`/movies`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
                     </div>
                 </form>
@@ -67,4 +77,10 @@ const AddMovieForm = (props) => {
     </div>);
 }
 
-export default AddMovieForm;
+const addStateToProps = state => {
+    return {
+        movies: state.movies
+    }
+}
+
+export default connect(addStateToProps, {addMovie})(AddMovieForm);
