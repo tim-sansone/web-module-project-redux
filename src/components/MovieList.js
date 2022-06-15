@@ -5,7 +5,6 @@ import MovieListItem from './MovieListItem';
 import MovieFooter from './MovieFooter';
 
 const MovieList = (props)=> {
-    console.log("props from redux in movielist", props)
     const movies = props.movies;
 
     return (
@@ -34,7 +33,6 @@ const MovieList = (props)=> {
 }
 
 const mapStateToProps = state => {
-    console.log("state in MovieList", state);
     return {
         movies: state.movies.movies
     }

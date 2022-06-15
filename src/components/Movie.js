@@ -9,8 +9,6 @@ const Movie = (props) => {
     const { id } = useParams();
     const { push } = useHistory();
 
-    console.log("props from redux in Movie" ,props)
-
     const movies = props.movies;
     const movie = movies.find(movie=>movie.id===Number(id));
     
